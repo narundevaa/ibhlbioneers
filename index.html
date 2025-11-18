@@ -1,13 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IBHL Bioneers — IB Bio Study Hub</title>
+  <title>IBHL Bioneers</title>
   <meta name="description" content="IB Biology study guides & quizzes (HL/SL) — IBHL Bioneers" />
   <style>
     :root{
-      --accent:#0b6cf0; --muted:#6b7280; --bg:#f7f8fb; --card:#ffffff;
+      --accent:#127811; --muted:#6b7280; --bg:#f7f8fb; --card:#ffffff;
       --glass: rgba(255,255,255,0.7);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
@@ -15,14 +15,14 @@
     body{margin:0;background:linear-gradient(180deg,#eef2ff 0%,var(--bg) 100%);color:#0f172a}
     header{display:flex;align-items:center;gap:16px;padding:18px 28px;background:transparent}
     .logo{display:flex;align-items:center;gap:12px}
-    .logo .mark{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px}
+    .logo .mark{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dca30);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px}
     .logo .title{font-weight:700}
 
     main{max-width:1100px;margin:28px auto;padding:20px}
     .search-wrap{text-align:center;margin-bottom:18px}
     .search{display:inline-flex;width:100%;max-width:760px;border-radius:12px;overflow:hidden;padding:6px;background:var(--card);box-shadow:0 6px 18px rgba(13, 38, 76, 0.06)}
     .search input{flex:1;padding:14px 16px;border:0;font-size:16px;background:transparent;outline:none}
-    .search button{background:var(--accent);border:0;color:white;padding:10px 18px;border-radius:8px;margin-right:6px}
+    .search button{background:linear-gradient(135deg,var(--accent),#7dca30);border:0;color:white;padding:10px 18px;border-radius:8px;margin-right:6px}
 
     .nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
     .nav-card{background:var(--card);padding:20px;border-radius:12px;text-align:center;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
@@ -55,13 +55,12 @@
       <div class="mark">IBB</div>
       <div class="title">IBHL <span style="color:var(--muted);font-weight:500">Bioneers</span></div>
     </div>
-    <div style="margin-left:auto;color:var(--muted);font-size:14px">IB Biology study hub — HL/SL</div>
   </header>
 
   <main>
     <section class="search-wrap">
       <div class="search">
-        <input id="searchInput" placeholder="Search study guides, quizzes, topics (e.g. 'photosynthesis', 'HL1', 'meiosis')" />
+        <input id="searchInput" placeholder="Search study guides, quizzes, topics, etc." />
         <button id="searchBtn">Search</button>
       </div>
     </section>
@@ -90,9 +89,7 @@
 
   </main>
 
-  <footer>
-    Made for IBHL Bioneers • Place your PDFs in /assets/guides and update guides list in code.
-  </footer>
+ 
 
   <script>
     // --- Data: Add your PDF URLs and quizzes here ---
@@ -129,7 +126,7 @@
     // --- Home ---
     function renderHome(container){
       container.innerHTML='';
-      const h = el('div','',`<h2>Welcome to IBHL Bioneers</h2><p class="small">Study guides and interactive quizzes for IB Biology (HL1, HL2, SL). Use the search bar to find resources across the site.</p>`);
+      const h = el('div','',`<h2>Welcome to IBHL Bioneers</h2><p class="small">Home page for your bioneering journey!</p>`);
       container.appendChild(h);
       // Quick links
       const grid = el('div','grid');
