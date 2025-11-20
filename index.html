@@ -164,6 +164,14 @@
             font-weight: 600
         }
 
+            .thumb img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: top;
+                border-radius: 12px;
+            }
+
         .meta {
             display: flex;
             justify-content: space-between;
@@ -278,9 +286,8 @@
   <script>
     // --- Data: Add your PDF URLs and quizzes here ---
     const guides = [
-      {id:'g1',title:'Water Study Guide (HLY1)',level:'HLY1',tags:['water','solvation', 'solvent', 'polar', 'hydr'],pdf:'assets/guides/WaterStudyGuide.pdf'},
-      {id:'g2',title:'Genetics Summary (SL)',level:'SL',tags:['genetics'],pdf:'assets/guides/genetics-summary.pdf'},
-      {id:'g3',title:'Photosynthesis (HL2)',level:'HL2',tags:['photosynthesis'],pdf:''} // empty pdf -> placeholder
+      {id:'g1',title:'Water Study Guide (HLY1)',level:'HLY1',tags:['water','solvation', 'solvent', 'polar', 'hydr'],pdf:'assets/guides/WaterStudyGuide.pdf', thumb:'assets/thumbnails/WaterStudyGuide.png'},
+      {id:'g2',title:'Photosynthesis (HL2)',level:'HL2',tags:['photosynthesis'],pdf:''}
     ];
 
     const quizzes = [
@@ -318,7 +325,7 @@
       const featuredGuides = guides.slice(0,4);
       featuredGuides.forEach(g=>{
         const c = el('div','guide');
-        const thumb = el('div', 'thumb', g.pdf ? `<span>Preview PDF</span>` : `<span>No preview</span>`);
+        const thumb = el('div', 'thumb', g.thumb ? `<img src="${g.thumb}" alt="Preview of ${g.title}" />` : `<span>No preview</span>`);
         const title = el('div','',`<strong>${g.title}</strong>`);
         const meta = el('div','meta', `<div class="tag">${g.level}</div><div><button onclick="openGuide('${g.id}')">Open</button></div>`);
         c.appendChild(thumb); c.appendChild(title); c.appendChild(meta);
