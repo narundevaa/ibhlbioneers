@@ -2,10 +2,12 @@
 const guides =
     [
         { id: 'g1', title: 'Water Study Guide', level: 'HLY1', tags: ['water', 'solvation', 'solvent', 'polar', 'hydr'], pdf: 'assets/guides/WaterStudyGuide.pdf', thumb: 'assets/thumbnails/WaterStudyGuide.png' },
-        { id: 'g2', title: 'Photosynthesis', level: 'HLY2', tags: ['photosynthesis'], pdf: '' },
-        { id: 'g3', title: 'Fire Study Guide', level: 'HLY1', tags: ['fir', 'solvation', 'solvent', 'polar', 'hydr'], pdf: '', thumb: '' },
-        { id: 'g4', title: 'Earth Study Guide', level: 'HLY1', tags: ['earth', 'solvation', 'solvent', 'polar', 'hydr'], pdf: '', thumb: '' },
-        { id: 'g5', title: 'Air Study Guide', level: 'HLY1', tags: ['air', 'solvation', 'solvent', 'polar', 'hydr'], pdf: '', thumb: '' }
+        { id: 'g2', title: 'Organic Chemistry, Carbs, & Lipids Study Guide', level: 'HLY1', tags: ['ochem', 'organic', 'chemistry', 'carbs', 'lipids', 'carbohydrates', 'sugars', 'membrane'], pdf: 'assets/guides/OrganicChemistryStudyGuide.pdf', thumb: 'assets/thumbnails/OrganicChemistryStudyGuide.png'},
+        { id: 'g3', title: 'Proteins Study Guide', level: 'HLY1', tags: ['protein', 'pepride', 'disulfide', 'amino', 'acid', 'structure', 'carboxyl', 'r group', 'denaturation'], pdf: 'assets/guides/ProteinsStudyGuide.pdf', thumb: 'assets/thumbnails/ProteinsStudyGuide.png' },
+        { id: 'g4', title: 'Enzymes & Metabolism Study Guide', level: 'HLY1', tags: ['enzyme', 'motabolism', 'anabolic', 'catabolic', 'hydrolysis', 'activation energy', 'denaturation' ], pdf: 'assets/guides/Enzymes&MetabolismStudyGuide.pdf', thumb: 'assets/thumbnails/Enzymes&MetabolismStudyGuide.png' },
+        { id: 'g5', title: 'Origin of Cells + Microscopy Study Guide', level: 'HLY1', tags: ['origin', 'cells', 'RNA', 'ribosome', 'double-helix', 'm=ia', 'micro', 'cell theory'], pdf: 'assets/guides/OriginOfCells+MicroscopyStudyGuide.pdf', thumb: 'assets/thumbnails/OriginOfCells+MicroscopyStudyGuide.png' },
+        { id: 'g6', title: 'Eukaryote Cells Study Guide', level: 'HLY1', tags: ['eukaryote', 'prokaryote', 'cells', 'multicellular', 'flagella', 'nucleus', 'nucleolus'], pdf: 'assets/guides/EukaryoteCellsStudyGuide.pdf', thumb: 'assets/thumbnails/EukaryoteCellsStudyGuide.png' },
+        { id: 'g7', title: 'Cellular Differentiation Study Guide', level: 'HLY1', tags: ['cellular differentiation', 'differentiation', 'specialization', 'function', 'expression', 'gene', 'stem', 'cell', 'tissue'], pdf: 'assets/guides/CellularDifferentiationStudyGuide.pdf', thumb: 'assets/thumbnails/CellularDifferentiationStudyGuide.png' }
     ];
 
 const quizzes =
@@ -24,12 +26,21 @@ const quizzes =
                     { q: 'If a diploid organism has 8 chromosomes, how many will be in a gamete?', choices: ['4', '8', '16', '2'], answer: 0 },
                     { q: 'What is the term for a segment of DNA that codes for a protein?', choices: ['Chromosome', 'Gene', 'Allele', 'Genome'], answer: 1 }
                 ]
+        },
+
+        {
+            id: 'q3', title: 'IDK BIO', level: 'HLY2', questions:
+                [
+                    { q: 'What?', choices: ['4', '8', '16', '2'], answer: 0 },
+                    { q: 'EVER?', choices: ['Chromosome', 'Gene', 'Allele', 'Genome'], answer: 1 }
+                ]
         }
     ];
 
 // --- Router ---
 function navigate(hash) {
     location.hash = hash
+    render();
 }
 
 function render() {
@@ -67,14 +78,28 @@ function renderHome(container) {
     let lower = ((Math.random() * (guides.length - 3)) / 1);
     let upper = lower + 4;
 
-    const featuredGuides = guides.slice(lower, upper);
+    const featuredGuides = guides.slice(lower, upper+1);
+    const featuredQuizzes = quizzes.slice(lower, upper-2);
 
     featuredGuides.forEach(g => {
         const c = el('div', 'guide');
         const thumb = el('div', 'thumb', g.thumb ? `<img src="${g.thumb}" alt="Preview of ${g.title}" />` : `<span>No preview</span>`);
         const title = el('div', '', `<strong>${g.title}</strong>`);
         const meta = el('div', 'meta', `<div class="tag">${g.level}</div><div><button onclick="openGuide('${g.id}')">Open</button></div>`);
-        c.appendChild(thumb); c.appendChild(title); c.appendChild(meta);
+        c.appendChild(thumb); 
+        c.appendChild(title); 
+        c.appendChild(meta);
+        grid.appendChild(c);
+    });
+
+    featuredQuizzes.forEach(q => {
+        const c = el('div', 'guide');
+        const thumb = el('div', 'thumb', `<span>Quiz</span>`);
+        const title = el('div', '', `<strong>${q.title}</strong>`);
+        const meta = el('div', 'meta', `<div class="tag">${q.level}</div><div><button onclick="startQuiz('${q.id}')">Start</button></div>`);
+        c.appendChild(thumb);
+        c.appendChild(title);
+        c.appendChild(meta);
         grid.appendChild(c);
     });
     container.appendChild(grid);
@@ -160,7 +185,7 @@ function renderQuizQuestion() {
     const container = document.getElementById('app'); container.innerHTML = '';
     const q = current.quiz.questions[current.index];
     const card = el('div', 'quiz-card');
-    card.innerHTML = `<h3>${current.quiz.title} — Q${current.index + 1}/${current.quiz.questions.length}</h3><p class="small">${q.q}</p>`;
+    card.innerHTML = `<h2>${current.quiz.title}: Question ${current.index + 1}/${current.quiz.questions.length}</h2><h3>${q.q}</h3>`;
     const choices = el('div', 'choices');
     q.choices.forEach((c, i) => {
         const ch = el('div', 'choice', c);
@@ -202,7 +227,7 @@ function selectChoice(i) {
 function renderQuizResult() {
     const container = document.getElementById('app'); container.innerHTML = '';
     const card = el('div', 'quiz-card');
-    card.innerHTML = `<h3>${current.quiz.title} — Result</h3><p class="small">Score: ${current.score} / ${current.quiz.questions.length}</p>`;
+    card.innerHTML = `<h2>${current.quiz.title}: Result</h2><h3>Score: ${current.score} / ${current.quiz.questions.length}</h3>`;
     const review = el('div');
     current.answers.forEach((a, idx) => {
         const correct = a.correct; const chosen = a.chosen;
@@ -211,7 +236,7 @@ function renderQuizResult() {
         review.appendChild(item);
     });
     card.appendChild(review);
-    const back = el('div', '', `<div style="margin-top:12px"><button onclick="navigate('#/quizzes')">Back to quizzes</button></div>`);
+    const back = el('div', '', `<div style="margin-top:12px"><button onclick= "navigate('#/quizzes')">Back to quizzes</button></div>`);
     card.appendChild(back);
     container.appendChild(card);
 }
